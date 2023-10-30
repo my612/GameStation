@@ -7,18 +7,18 @@ class Player
 {
     private:
         string name;
-        string symbol;
+        char symbol;
     
     public:
-        Player(string name, string symbol);
+        Player(string name, char symbol);
         string getName();
-        string getSymbol();
-        friend ostream& operator<<(ostream os, Player p)
+        char getSymbol();
+        friend ostream& operator<<(ostream &os, Player *p)
         {
-            os << p.name << " " << p.symbol;
+            os << p->name << " " << p->symbol <<endl;
             return os;
         }
         void setName(string n);
-        void setSymbol(string s);
+        void setSymbol(char s);
 };
 
