@@ -5,7 +5,6 @@ TicTacToe::TicTacToe() : BoardGame(3, 3)
 }
 void TicTacToe::printBoard()
 {
-    int c = 1;
     for(int i = 0; i < game_grid.size(); i++)
     {
         for(int j = 0; j < game_grid[i].size(); j++)
@@ -15,7 +14,6 @@ void TicTacToe::printBoard()
                 cout << '#' << " ";
             else
                 cout << game_grid[i][j]->getSymbol() << " ";
-            c++;
         }
         cout << endl;
     }

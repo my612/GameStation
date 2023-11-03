@@ -18,10 +18,17 @@ void BoardGame::printBoard()
     for(int i = 0; i < game_grid.size(); i++)
     {
         for(int j = 0; j < game_grid[i].size(); j++)
-            cout << game_grid[i][j]->getSymbol();
+        {
+
+            if(game_grid[i][j] == nullptr)
+                cout << '#' << " ";
+            else
+                cout << game_grid[i][j]->getSymbol() << " ";
+        }
         cout << endl;
     }
 }
+
 bool BoardGame::validateBoundries(int l, int m)
 {
     return (l <= x && l >= 0 && m <= y && m >= 0);
@@ -29,23 +36,14 @@ bool BoardGame::validateBoundries(int l, int m)
 
 void BoardGame::makeMove(Player* p, int x, int y)
 {
-    if(validateBoundries(x, y))
-        setPos(p, x, y);
-    else
-        cout << "OUT OF BOUNDS, NOT A POSITION IN THE GAME";
+    setPos(p, x, y);
 }
 void BoardGame::setPos(Player* p, int x, int y)
 {
-    for(int i = 0; i < game_grid.size(); i++)
-    {
-        for(int j = 0; j < game_grid[i].size(); j++)
-        {
-            if(x == i && y == j && game_grid[i][j] == nullptr)
-            {
-                game_grid[i][j] = p;
-            }
-        }
-    }
+    if(validateBoundries(x, y) && game_grid[x][y] == nullptr)
+        game_grid[x][y] = p; 
+    else
+        cout << "OUT OF BOUNDS, NOT A POSITION IN THE GAME";
 }
 bool BoardGame:: gridFull()
 {
