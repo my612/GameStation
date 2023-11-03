@@ -5,6 +5,7 @@
 #include "BoardGame.h"
 #include <map>
 #include <utility>
+#include "ConnectFour.h"
 using namespace std;
 int main()
 {
@@ -62,6 +63,47 @@ int main()
             cout << "Updated Board: " <<endl; 
             XO->printBoard();
         } while (!(XO->isGameOver()));
+    }
+    if(inp == 2)
+    {
+        ConnectFour* CF = new ConnectFour();
+        CF->printBoard();
+        stack<bool> pl1, pl2;
+        cout << "Who wants to start? for player 1 enter 1 and for player 2 enter 2: ";
+        int n;
+        cin >> n;
+        if(n == 1)
+            pl1.push(1);
+        else
+            pl2.push(1);
+        int col;
+        for(int i = 1; i < 8; i++)
+            cout << i << " ";
+        cout << endl;
+        CF->printBoard();
+        do
+        {
+            if(!pl1.empty())
+            {
+                cout << CF->P1->getName() << "'s turn." <<endl;
+                cout << "Enter the number of the column you want to play in: ";
+                cin >> col;
+                CF->makeMove(CF->P1, col - 1);
+                pl1.pop();
+                pl2.push(1);
+            }
+            else
+            {
+                cout << CF->P2->getName() << "'s turn." <<endl;
+                cout << "Enter the number of the column you want to play in: ";
+                cin >> col;
+                CF->makeMove(CF->P2, col - 1);
+                pl2.pop();
+                pl1.push(1);
+            }
+            cout << "Updated Board: " <<endl; 
+            CF->printBoard();
+        } while (!(CF->isGameOver()));
         
     }
 }

@@ -1,162 +1,178 @@
 #include "ConnectFour.h"
 
-ConnectFour::ConnectFour():BoardGame(6, 7){}
+ConnectFour::ConnectFour() :BoardGame(6, 7) 
+{ 
+    curr_x = 0; curr_y = 0; 
+    getPlayers('R', 'Y');
+}
 void ConnectFour::makeMove(Player* p, int y)
 {
     int i = 0;
-    while(game_grid[i + 1][y] == nullptr)
+    while(i < 5 && game_grid[i + 1][y] == nullptr)
     {
         i++;
     }
     curr_x = i; curr_y = y;
     setPos(p, curr_x, curr_y);
 }
-bool ConnectFour::isGameOver()
-{
-    //Down
-    bool isOver = false;
-    if(curr_y < 3 && game_grid[curr_x][curr_y] == game_grid[curr_x + 1][curr_y] && game_grid[curr_x + 1][curr_y] == game_grid[curr_x + 2][curr_y] && game_grid[curr_x + 2][curr_y] == game_grid[curr_x + 3][curr_y])
+//bool ConnectFour::isGameOver()
+//{
+//    //Down
+//    bool isOver = false;
+//    if(curr_x < 3 && game_grid[curr_x][curr_y] == game_grid[curr_x + 1][curr_y] && game_grid[curr_x + 1][curr_y] == game_grid[curr_x + 2][curr_y] && game_grid[curr_x + 2][curr_y] == game_grid[curr_x + 3][curr_y])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }//Left
+//    else if(curr_y > 2 && game_grid[curr_x][curr_y] == game_grid[curr_x][curr_y - 1] && game_grid[curr_x][curr_y - 1] == game_grid[curr_x][curr_y - 2] && game_grid[curr_x][curr_y - 2] == game_grid[curr_x][curr_y - 3])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }
+//    //Right
+//    else if(curr_y < 4 && game_grid[curr_x][curr_y] == game_grid[curr_x][curr_y + 1] && game_grid[curr_x][curr_y + 1] == game_grid[curr_x][curr_y + 2] && game_grid[curr_x][curr_y + 2] == game_grid[curr_x][curr_y + 3])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }
+//    //Left Diagonal down
+//    else if(curr_y > 2 && curr_x < 3 && game_grid[curr_x][curr_y] == game_grid[curr_x - 1][curr_y + 1] && game_grid[curr_x - 1][curr_y + 1] == game_grid[curr_x - 2][curr_y + 2] && game_grid[curr_x - 2][curr_y + 2] == game_grid[curr_x - 3][curr_y + 3])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }
+//    //Right Diagonal
+//    else if(curr_y < 4 && curr_x < 3 && game_grid[curr_x-1][curr_y-1] != nullptr && game_grid[curr_x][curr_y] == game_grid[curr_x + 1][curr_y + 1] && game_grid[curr_x + 1][curr_y + 1] == game_grid[curr_x + 2][curr_y + 2] && game_grid[curr_x + 2][curr_y + 2] == game_grid[curr_x + 3][curr_y + 3])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }
+//    //Left UP
+//    else if(curr_y > 2 && curr_x > 2 && game_grid[curr_x][curr_y] == game_grid[curr_x - 1][curr_y - 1] && game_grid[curr_x - 1][curr_y - 1] == game_grid[curr_x - 2][curr_y - 2] && game_grid[curr_x - 2][curr_y - 2] == game_grid[curr_x - 3][curr_y - 3])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }
+//    //Right UP
+//    else if(curr_x > 2 && curr_y < 4 && game_grid[curr_x + 1][curr_y - 1] != nullptr && game_grid[curr_x][curr_y] == game_grid[curr_x + 1][curr_y - 1] && game_grid[curr_x + 1][curr_y - 1] == game_grid[curr_x + 2][curr_y - 2] && game_grid[curr_x + 2][curr_y - 2] == game_grid[curr_x + 3][curr_y - 3])
+//    {
+//        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
+//        isOver = true;
+//    }  
+//    else if(gridFull())
+//    {
+//        cout << "It is a draw!" << endl;
+//        isOver = true;
+//    }
+//    if(isOver)
+//        return true;
+//    else 
+//        return false;
+//}
+ bool ConnectFour::isGameOver()
+ {
+    if((left(curr_x, curr_y) + right(curr_x, curr_y)) >= 3)
     {
         cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-        isOver = true;
-    }//Left
-    else if(curr_x > 2 && game_grid[curr_x][curr_y] == game_grid[curr_x][curr_y - 1] && game_grid[curr_x][curr_y - 1] == game_grid[curr_x][curr_y - 2] && game_grid[curr_x][curr_y - 2] == game_grid[curr_x][curr_y - 3])
-    {
-        cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-        isOver = true;
+        return true;
     }
-    //Right
-    else if(curr_x < 4 && game_grid[curr_x][curr_y] == game_grid[curr_x][curr_y + 1] && game_grid[curr_x][curr_y + 1] == game_grid[curr_x][curr_y + 2] && game_grid[curr_x][curr_y + 2] == game_grid[curr_x][curr_y + 3])
+    else if((dia_up_left(curr_x, curr_y) + dia_down_right(curr_x, curr_y)) >= 3)
     {
         cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-        isOver = true;
+        return true;
     }
-    //Left Diagonal
-    else if(curr_x > 2 && curr_y < 3 && game_grid[curr_x][curr_y] == game_grid[curr_x - 1][curr_y + 1] && game_grid[curr_x - 1][curr_y + 1] == game_grid[curr_x - 2][curr_y + 2] && game_grid[curr_x - 2][curr_y + 2] == game_grid[curr_x - 3][curr_y + 3])
+    else if((dia_up_right(curr_x, curr_y) + dia_down_left(curr_x, curr_y)) >= 3)
     {
         cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-        isOver = true;
+        return true;
     }
-    //Right Diagonal
-    else if(curr_x < 4 && curr_y < 3 && game_grid[curr_x][curr_y] == game_grid[curr_x + 1][curr_y + 1] && game_grid[curr_x + 1][curr_y + 1] == game_grid[curr_x + 2][curr_y + 2] && game_grid[curr_x + 2][curr_y + 2] == game_grid[curr_x + 3][curr_y + 3])
+    else if(down(curr_x, curr_y) >= 3)
     {
         cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-        isOver = true;
+        return true;
     }
     else if(gridFull())
     {
         cout << "It is a draw!" << endl;
-        isOver = true;
-    }
-    if(isOver)
         return true;
-    else 
+    }
+    else
         return false;
 }
-// bool ConnectFour::isGameOver()
-// {
-//     int c = 1;
-//     int i = 0;
-//     //Down
-//     if(curr_y < 3)
-//     {
-//     while(game_grid[curr_x + i][curr_y] == game_grid[curr_x + i + 1][curr_y] || c!=4)
-//     {
-//         i++;
-//         c++;
-//     }
-//     if(c == 4)
-//         {
-//             cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-//             return true;
-//         }
-//     else 
-//         {
-//             c = 1;
-//             i = 0;
-//         }
-//     }//Left
-//     if(curr_x > 2)
-//     {
-//         while (game_grid[curr_x][curr_y - i] == game_grid[curr_x][curr_y - i - 1] || c!=4)
-//         {
-//             i++;
-//             c++;
-//         }
-//         if(c == 4)
-//         {
-//             cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-//             return true;
-//         }
-//         else
-//         {
-//             c = 1;
-//             i = 0;
-//         }
-//     }//Right
-//     if(curr_x < 4)
-//     {
-//         while (game_grid[curr_x][curr_y + i] == game_grid[curr_x][curr_y + i + 1] || c!=4)
-//         {
-//             i++;
-//             c++;
-//         }
-//         if(c == 4)
-//         {
-//             cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-//             return true;
-//         }
-//         else
-//         {
-//             c = 1;
-//             i = 0;
-//         }
-//     }//Left Diagonal
-//     if(curr_x > 2 && curr_y < 3)
-//     {
-//         while (game_grid[curr_x - i][curr_y + i] == game_grid[curr_x - i - 1][curr_y + i + 1] || c!=4)
-//         {
-//             i++;
-//             c++;
-//         }
-//         if(c == 4)
-//         {
-//             cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-//             return true;
-//         }
-//         else
-//         {
-//             c = 1;
-//             i = 0;
-//         }
-//     }//Right Diagonal
-//     if(curr_x < 4 && curr_y < 3)
-//     {
-//         while (game_grid[curr_x + i][curr_y + i] == game_grid[curr_x + i + 1][curr_y + i + 1] || c!=4)
-//         {
-//             i++;
-//             c++;
-//         }
-//         if(c == 4)
-//         {
-//             cout << game_grid[curr_x][curr_y]->getName() << " wins!" << endl;
-//             return true;
-//         }
-//         else
-//         {
-//             c = 1;
-//             i = 0;
-//         }
-//     }
-//     if(gridFull())
-//         {
-//             cout << "It is a draw!" << endl;
-//             return true;
-//         }
-//     else
-//         return false;
-// }
-void ConnectFour::printBoard()
+int ConnectFour::left(int x, int y)
 {
-    for(int i = 0)
+    int c = 0;
+    int i = 1;
+    while ((y-i) >= 0 && game_grid[x][y - i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
 }
+int ConnectFour::right(int x, int y)
+{
+    int c = 0;
+    int i = 1;
+    while ((y + i) < 6 && game_grid[x][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
+}
+int ConnectFour::dia_up_right(int x, int y)
+{
+    int c = 0;
+    int i = 1;
+    while ((y + i) < 6 && (x - i) > 0 && game_grid[x - i][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
+}
+int ConnectFour::dia_up_left(int x, int y)
+{
+    int c = 0;
+    int i = 1;
+    while ((y - i) >= 0 && (x - i) > 0 && game_grid[x - i][y - i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
+}
+int ConnectFour::dia_down_right(int x, int y)
+{
+    int c = 0;
+    int i = 1;
+    while ((y + i) < 6 && (x + i) < 5 && game_grid[x + i][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
+}  
+int ConnectFour::dia_down_left(int x, int y)
+{
+    int c = 0;
+    int i = 1;
+    while ((y - i) >= 0 && (x + i) < 5 && game_grid[x + i][y - i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
+}  
+int ConnectFour::down(int x, int y)
+{
+    int c = 0;
+    int i = 1;
+    while ((x + i) <= 5 && game_grid[x + i][y] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    {
+        c++;
+        i++;
+    }
+    return c;
+}  

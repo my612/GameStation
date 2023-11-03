@@ -3,21 +3,6 @@ TicTacToe::TicTacToe() : BoardGame(3, 3)
 {
     cout << "Game ON" << endl;
 }
-void TicTacToe::printBoard()
-{
-    for(int i = 0; i < game_grid.size(); i++)
-    {
-        for(int j = 0; j < game_grid[i].size(); j++)
-        {
-
-            if(game_grid[i][j] == nullptr)
-                cout << '#' << " ";
-            else
-                cout << game_grid[i][j]->getSymbol() << " ";
-        }
-        cout << endl;
-    }
-}
 bool TicTacToe::isGameOver()
 {
     bool over = false;
