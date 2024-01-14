@@ -34,16 +34,22 @@ bool BoardGame::validateBoundries(int l, int m)
     return (l <= x && l >= 0 && m <= y && m >= 0);
 }
 
-void BoardGame::makeMove(Player* p, int x, int y)
+void BoardGame::makeMove(Player* p, int x, int y, bool &b)
 {
-    setPos(p, x, y);
+    setPos(p, x, y, b);
 }
-void BoardGame::setPos(Player* p, int x, int y)
+void BoardGame::setPos(Player* p, int x, int y, bool &b)
 {
     if(validateBoundries(x, y) && game_grid[x][y] == nullptr)
-        game_grid[x][y] = p; 
+    {
+        b = true;
+        game_grid[x][y] = p;
+    } 
     else
-        cout << "OUT OF BOUNDS, NOT A POSITION IN THE GAME";
+    {
+        b = false;
+        cout << "OUT OF BOUNDS, NOT A POSITION IN THE GAME, TRY AGAIN:";
+    }
 }
 bool BoardGame:: gridFull()
 {

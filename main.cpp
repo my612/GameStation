@@ -13,6 +13,7 @@ int main()
     cout << "To play Enter the number of the game:"<<endl;
     cout << "1- Tic Tac Toe"<< endl;
     cout << "2- Connect Four" <<endl;
+    bool can_be_played = true;
     int inp;
     cin >> inp;
     if(inp == 1)
@@ -46,8 +47,11 @@ int main()
             {
                 cout << XO->P1->getName() << "'s turn." <<endl;
                 cout << "Enter the number of the square you want to play: ";
-                cin >> c;
-                XO->makeMove(XO->P1, connecter[c].first, connecter[c].second);
+                do
+                {
+                    cin >> c;
+                    XO->makeMove(XO->P1, connecter[c].first, connecter[c].second, can_be_played);
+                } while(!can_be_played);
                 pl1.pop();
                 pl2.push(1);
             }
@@ -55,8 +59,11 @@ int main()
             {
                 cout << XO->P2->getName() << "'s turn." <<endl;
                 cout << "Enter the number of the square you want to play: ";
-                cin >> c;
-                XO->makeMove(XO->P2, connecter[c].first, connecter[c].second);
+                do
+                {
+                    cin >> c;
+                    XO->makeMove(XO->P2, connecter[c].first, connecter[c].second, can_be_played);
+                } while (!can_be_played);
                 pl2.pop();
                 pl1.push(1);
             }
@@ -87,8 +94,11 @@ int main()
             {
                 cout << CF->P1->getName() << "'s turn." <<endl;
                 cout << "Enter the number of the column you want to play in: ";
-                cin >> col;
-                CF->makeMove(CF->P1, col - 1);
+                do
+                {
+                    cin >> col;
+                    CF->makeMove(CF->P1, col - 1, can_be_played);
+                } while(!can_be_played);
                 pl1.pop();
                 pl2.push(1);
             }
@@ -96,8 +106,11 @@ int main()
             {
                 cout << CF->P2->getName() << "'s turn." <<endl;
                 cout << "Enter the number of the column you want to play in: ";
-                cin >> col;
-                CF->makeMove(CF->P2, col - 1);
+                do
+                {
+                    cin >> col;
+                    CF->makeMove(CF->P2, col - 1, can_be_played);
+                } while(!can_be_played);
                 pl2.pop();
                 pl1.push(1);
             }
@@ -106,4 +119,5 @@ int main()
         } while (!(CF->isGameOver()));
         
     }
+    
 }

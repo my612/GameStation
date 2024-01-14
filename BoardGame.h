@@ -13,8 +13,8 @@ public:
     Player* P2;
     BoardGame(int r, int c);
     void printBoard();
-    void makeMove(Player* p, int x, int y);
-    void setPos(Player* p, int x, int y);
+    void makeMove(Player* p, int x, int y, bool &b);
+    void setPos(Player* p, int x, int y, bool &b);
     bool validateBoundries(int l, int m);
     virtual bool isGameOver() = 0;
     void getPlayers(char first, char sec);

@@ -11,7 +11,7 @@ class ConnectFour :
     public:
     ConnectFour();
     using BoardGame::makeMove;
-    void makeMove(Player* p, int y);
+    void makeMove(Player* p, int y, bool &b);
     int left(int x, int y);
     int right(int x, int y);
     int dia_up_right(int x, int y);

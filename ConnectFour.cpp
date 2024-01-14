@@ -5,15 +5,27 @@ ConnectFour::ConnectFour() :BoardGame(6, 7)
     curr_x = 0; curr_y = 0; 
     getPlayers('R', 'Y');
 }
-void ConnectFour::makeMove(Player* p, int y)
+void ConnectFour::makeMove(Player* p, int y, bool &b)
 {
     int i = 0;
+    if (y > 6 || y < 0)
+    {
+		cout << "Please enter a valid column number." << endl;
+		b = false;
+		return;
+	}
+    if (game_grid[0][y] != nullptr)
+    {
+		cout << "This column is full, please choose another one." << endl;
+		b = false;
+		return;
+	}
     while(i < 5 && game_grid[i + 1][y] == nullptr)
     {
         i++;
     }
     curr_x = i; curr_y = y;
-    setPos(p, curr_x, curr_y);
+    setPos(p, curr_x, curr_y, b);
 }
 //bool ConnectFour::isGameOver()
 //{
@@ -114,18 +126,18 @@ int ConnectFour::right(int x, int y)
 {
     int c = 0;
     int i = 1;
-    while ((y + i) < 6 && game_grid[x][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    while ((y + i) <= 6 && game_g       rid[x][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
     {
         c++;
         i++;
     }
     return c;
-}
+}       
 int ConnectFour::dia_up_right(int x, int y)
 {
     int c = 0;
     int i = 1;
-    while ((y + i) < 6 && (x - i) > 0 && game_grid[x - i][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    while ((y + i) <= 6 && (x - i) >= 0 && game_grid[x - i][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
     {
         c++;
         i++;
@@ -147,7 +159,7 @@ int ConnectFour::dia_down_right(int x, int y)
 {
     int c = 0;
     int i = 1;
-    while ((y + i) < 6 && (x + i) < 5 && game_grid[x + i][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    while ((y + i) < 7 && (x + i) < 6 && game_grid[x + i][y + i] == game_grid[x][y] && game_grid[x][y] != nullptr)
     {
         c++;
         i++;
@@ -158,7 +170,7 @@ int ConnectFour::dia_down_left(int x, int y)
 {
     int c = 0;
     int i = 1;
-    while ((y - i) >= 0 && (x + i) < 5 && game_grid[x + i][y - i] == game_grid[x][y] && game_grid[x][y] != nullptr)
+    while ((y - i) >= 0 && (x + i) <= 5 && game_grid[x + i][y - i] == game_grid[x][y] && game_grid[x][y] != nullptr)
     {
         c++;
         i++;
